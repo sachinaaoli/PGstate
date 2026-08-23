@@ -20,11 +20,24 @@ describe("Softix Payment Gateway - Dashboard", () => {
       .should("not.be.empty");
   });
 
-  it("TC021 - should not redirect back to login after refresh", () => {
-    cy.reload();
+it("TC021 - should redirect to system after successful login", () => {
+  cy.visit("https://pgstage.softix.shop/system/login");
 
-    cy.url()
-      .should("not.include", "/system");
+  cy.get("#login").type("9768755434");
+  cy.get('input[type="password"]').type("kathbag@123");
+
+  cy.get('button[type="submit"]').click();
+  cy.wait(20000);
+
+  cy.url().should("eq", "https://pgstage.softix.shop/system");
+});
+it("TC022 - should display dashboard", () => {
+    cy.url().should("eq", "https://pgstage.softix.shop/system");
+  });
+
+  it("TC023 - should display navigation menu", () => {
+    // Replace this with your working navigation selector
+    cy.get("YOUR_NAV_SELECTOR").should("be.visible");
   });
 
 });
